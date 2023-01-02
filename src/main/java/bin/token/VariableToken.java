@@ -19,6 +19,15 @@ public interface VariableToken {
     String SET_FLOAT = "ㄴㅅㄴ";
     String SET_DOUBLE = "ㄴㅆㄴ";
 
+    String SET_GET = ">";
+    String SET_SIZE = "'";
+    String SET_ISEMPTY = "?";
+    String SET_CONTAINS = ">?";
+
+    String SET_CLEAR    = "!";
+    String SET_ADD      = "<";
+
+
     // LIST
     String LIST_INTEGER = "ㄹㅈㄹ";
     String LIST_LONG = "ㄹㅉㄹ";

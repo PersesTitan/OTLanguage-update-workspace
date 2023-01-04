@@ -1,8 +1,6 @@
 package work;
 
-import bin.apply.item.AccessMap;
-import bin.apply.type_tool.Casting;
-import bin.exception.VariableException;
+import bin.apply.item.map.AccessMap;
 import lombok.Getter;
 import work.item.TypeDTO;
 import work.item.TypeListDTO;

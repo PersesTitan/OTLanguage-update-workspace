@@ -41,31 +41,37 @@ public interface CalculatorTool {
         StringTokenizer tokenizer = new StringTokenizer(line, "ㅇㄴ".concat(OR).concat(AND), true);
         while (tokenizer.hasMoreTokens()) {
             String group = tokenizer.nextToken();
-            if (group.equals("ㅇ")) {
-                String a = tokenizer.nextToken();
-                if (a.equals("ㅇ")) stack.add(TRUE);
-                else if (a.equals("ㄴ")) stack.add(NOT);
-                else if (compare.containsKey(a)) {
-                    String b = tokenizer.nextToken();
-                    if (b.equals("ㅇ")) stack.add(a);    // >, <, <=, >=, =
-                    else throw new MatchException().grammarTypeError(group.concat(a).concat(b), COMPARE);
-                } else if (number.containsKey(a)) {
-                    String b = tokenizer.nextToken();
-                    if (b.equals("ㅇ")) stack.add(a);
-                    else throw new MatchException().grammarTypeError(group.concat(a).concat(b), NUMBER_SING);
-                } else {
-                    stack.add(group);
+            switch (group) {
+                case "ㅇ" -> {
+                    String a = tokenizer.nextToken();
+                    if (a.equals("ㅇ")) stack.add(TRUE);
+                    else if (a.equals("ㄴ")) stack.add(NOT);
+                    else if (compare.containsKey(a)) {      // >, <, <=, >=, =
+                        String b = tokenizer.nextToken();
+                        if (b.equals("ㅇ")) stack.add(a);
+                        else {
+                            if (stack.isEmpty()) stack.add(group.concat(a).concat(b));
+                            else stack.add(stack.pop().concat(group).concat(a).concat(b));
+                        }
+                    } else if (number.containsKey(a)) {     // +, -, *, /, %
+                        String b = tokenizer.nextToken();
+                        if (b.equals("ㅇ")) stack.add(a);
+                        else {
+                            if (stack.isEmpty()) stack.add(group.concat(a).concat(b));
+                            else stack.add(stack.pop().concat(group).concat(a).concat(b));
+                        }
+                    } else stack.add(stack.pop().concat(group).concat(a));
                 }
-            } else if (group.equals("ㄴ")) {
-                String a = tokenizer.nextToken();
-                if (a.equals("ㄴ")) stack.add(FALSE);
-            } else if (group.equals(OR)) {
-
-            } else if (group.equals(AND)) {
-
+                case "ㄴ" -> {
+                    String a = tokenizer.nextToken();
+                    if (a.equals("ㄴ")) stack.add(FALSE);
+                    else stack.add(group.concat(a));
+                }
+                case OR -> stack.add(OR);
+                case AND -> stack.add(AND);
+                default -> stack.add(group);
             }
         }
-
         return stack;
     }
 

@@ -7,8 +7,6 @@ import bin.orign.CreateOrigin;
 import bin.token.KlassToken;
 import lombok.Getter;
 
-import java.util.AbstractCollection;
-import java.util.Iterator;
 import java.util.Objects;
 import java.util.function.Function;
 
@@ -60,6 +58,11 @@ public enum TypeCast {
             if (typeValue.getKlass().equals(klass)) return typeValue;
         }
         throw new VariableException().noDefineOrigin();
+    }
+
+    public static String toString(Object o) {
+        if (o instanceof Boolean b) return b ? TRUE : FALSE;
+        else return o.toString();
     }
 
     public boolean isBoolean() {

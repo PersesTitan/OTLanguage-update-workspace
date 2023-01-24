@@ -1,22 +1,25 @@
 package bin.apply;
 
-import bin.apply.item.map.TypeMap;
 import bin.exception.VariableException;
-import work.ReplaceWork;
-import work.StartWork;
+import work.CreateWork;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 public interface Repository {
-    LinkedList<TypeMap> repositoryArray = new LinkedList<>();
-    Set<String> types = new HashSet<>();
+    // 파일 값
+    Map<String, Map<Long, String>> filesValue = new HashMap<>();
 
-    Map<String, Map<String, StartWork>> startWorks = new HashMap<>();
-    Map<String, Map<String, ReplaceWork>> replaceWorks = new HashMap<>();
-    Set<String> defineWordList = new HashSet<>();
+    // 변수 타입들이 정의된 리스트
+    Map<String, Class<?>> variableTypes = new HashMap<>();
 
-    static void addDefineWord(String word) {
-        if (defineWordList.contains(word)) throw new VariableException().defineType(word);
-        else defineWordList.add(word);
+    static void add(String type, Class<?> klass) {
+        if (variableTypes.containsKey(type)) throw new VariableException().defineType();
+        else variableTypes.put(type, klass);
     }
+
+    Set<String> noUse = new HashSet<>();
+    Map<String, CreateWork> createWorks = new HashMap<>();
 }

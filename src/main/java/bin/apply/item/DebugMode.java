@@ -17,15 +17,15 @@ public enum DebugMode {
      *               => 1 < 2            <br>
      *               => true             <br>
      */
-     public boolean check(DebugMode debugMode) {
+    public boolean check(DebugMode debugMode) {
         return this.level < debugMode.level;
     }
 
     public boolean isCompile() {
-         return this.equals(COMPILE);
+        return this.equals(COMPILE);
     }
 
     public boolean isNoCompile() {
-         return !isCompile();
+        return !isCompile();
     }
 }

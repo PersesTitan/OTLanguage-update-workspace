@@ -1,47 +1,35 @@
 package bin.exception;
 
+import bin.apply.Repository;
 import bin.apply.Setting;
-import bin.apply.type.RunType;
 
-import static bin.apply.Setting.errorMessage;
-import static bin.apply.Setting.runType;
+import java.util.Iterator;
 
 public interface ErrorMessage {
-    static void printErrorMessage(RuntimeException e, String subMessage) {
-        String message = "OTLanguage." + e.getClass().getSimpleName() + ": " +
-                e.getMessage() +
-                (subMessage.isBlank() ? "" : subMessage.replaceAll("(^|\\n)","\n\totl "));
-        if (runType.get().equals(RunType.Shell)) errorMessage(message);
-        else System.err.println(message);
-    }
+    // errorType: VariableError
+    // message: 변수타입이 유효하지 않습니다.
+    // subMessage: No vail ~ fix
+    // path: start.otl
+    static void printErrorMessage(String errorType, String message, String subMessage) {
+        final String nextLine = System.lineSeparator().concat("\t");
 
-    static void printErrorMessage(RuntimeException e, String subMessage, String path) {
-        String message = "OTLanguage." + e.getClass().getSimpleName() + ": " +
-                e.getMessage() +
-                "\n\totl Path(" + path + ")" +
-                (subMessage.isBlank() ? "" : subMessage.replaceAll("(^|\\n)","\n\totl "));
-        if (runType.get().equals(RunType.Shell)) errorMessage(message);
-        else System.err.println(message);
-    }
+        StringBuilder messageTotal = new StringBuilder("OTLanguage.");
+        messageTotal.append(errorType).append(": ").append(message);
 
-    static void printErrorMessage(RuntimeException e, String subMessage, String path, String line, long position) {
-        String message = "OTLanguage." + e.getClass().getSimpleName() + ": " +
-                e.getMessage() +
-                (path == null ? "" : "\n\totl file location where it occurred(" + path + ":" + position + ")") +
-                "\n\totl line that occurred(" + line + ")" +
-                (subMessage.isBlank() ? "" : subMessage.replaceAll("(^|\\n)","\n\totl "));
-        if (runType.get().equals(RunType.Shell)) errorMessage(message);
-        else System.err.println(message);
-    }
+        final Iterator<String> pathIte = Repository.paths.iterator();
+        final Iterator<Long> posIte = Repository.positions.iterator();
 
-    static void printErrorMessage(String e, String mes, String subMessage, String path, String line, long position) {
-        subMessage = subMessage.strip();
-        String message = "OTLanguage." + e + ": " +
-                mes +
-                (path == null ? "" : "\n\totl file location where it occurred(" + path + ":" + position + ")") +
-                "\n\totl line that occurred(" + line + ")" +
-                (subMessage.isBlank() ? "" : subMessage.replaceAll("(^|\\n)","\n\totl "));
-        if (runType.get().equals(RunType.Shell)) errorMessage(message);
-        else System.err.println(message);
+        messageTotal.append(nextLine).append("otl file location where it occurred(")
+                .append(pathIte.next()).append(':').append(posIte.next()).append(')');
+        while (pathIte.hasNext() && posIte.hasNext()) {
+            String path = pathIte.next();
+            long position = posIte.next();
+            messageTotal.append(nextLine).append("- ").append(path).append(':').append(position);
+        }
+        messageTotal.append(nextLine).append("otl ");
+        subMessage.strip().lines().forEach(line -> messageTotal.append(nextLine).append("otl ").append(line));
+
+        if (Repository.runType.get().isShell()) Setting.errorMessage(messageTotal.toString());
+        else System.err.println(messageTotal);
     }
 }

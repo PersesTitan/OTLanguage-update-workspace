@@ -10,7 +10,8 @@ public enum MatchException implements ExceptionTool {
     PARAM_COUNT_ERROR("메소드의 파리미터 길이가 유효하지 않습니다."),
     ZONE_ERROR("존을 사용할 수 없거나 사용해야합니다."),
     DEFINE_CLASS_NAME("이미 정의된 클래스 이름입니다."),
-    DEFINE_METHOD_NAME("이미 정의된 메소드 이름입니다.")
+    DEFINE_METHOD_NAME("이미 정의된 메소드 이름입니다."),
+    CALCULATOR_ERROR("계산식 중 유효하지 않는 토큰이 존재합니다."),
     ;
 
     private AtomicReference<String> errorCode;
@@ -43,6 +44,11 @@ public enum MatchException implements ExceptionTool {
                     """
                     The method name is already defined. %s
                     Please check the name.
+                    """;
+            case CALCULATOR_ERROR ->
+                    """
+                    An invalid token exists in the calculation expression. %s
+                    Please check the calculation formula.
                     """;
         };
     }

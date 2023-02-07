@@ -6,7 +6,8 @@ import java.util.concurrent.atomic.AtomicReference;
 
 @RequiredArgsConstructor
 public enum FileException implements ExceptionTool {
-    DO_NOT_READ("파일을 읽을 수 없습니다.");
+    DO_NOT_READ("파일을 읽을 수 없습니다."),
+    DO_NOT_INCLUDE("클래스 추가에 실패하였습니다.")
     ;
 
     private AtomicReference<String> errorCode;
@@ -19,6 +20,11 @@ public enum FileException implements ExceptionTool {
                     """
                     File not found. %s
                     Please check the file location and path.
+                    """;
+            case DO_NOT_INCLUDE ->
+                    """
+                    Failed to add class. %s
+                    Please download the file again or try again.
                     """;
         };
     }

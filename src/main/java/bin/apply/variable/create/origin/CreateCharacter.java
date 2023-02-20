@@ -26,7 +26,5 @@ public class CreateCharacter extends CreateWork<Character> {
     }
 
     @Override
-    protected void reset() {
-
-    }
+    public void reset() {}
 }

@@ -20,5 +20,5 @@ public class CreateDouble extends CreateWork<Double> {
     }
 
     @Override
-    protected void reset() {}
+    public void reset() {}
 }

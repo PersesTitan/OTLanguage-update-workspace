@@ -11,8 +11,7 @@ public class CreateCharacter extends CreateWork<Character> {
 
     @Override
     protected Object createItem(Object... params) {
-        if (params[0] instanceof Character) return params[0];
-        else if (params[0] instanceof Integer i) return (char) ((int) i);
+        if (params[0] instanceof Integer i) return (char) ((int) i);
         else {
             String value = params[0].toString();
             if (value.length() == 1) return value.charAt(0);

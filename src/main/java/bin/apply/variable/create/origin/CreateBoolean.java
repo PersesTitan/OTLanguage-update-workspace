@@ -18,5 +18,5 @@ public class CreateBoolean extends CreateWork<Boolean> {
     }
 
     @Override
-    protected void reset() {}
+    public void reset() {}
 }

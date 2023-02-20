@@ -38,7 +38,7 @@ public interface CreateTool {
             }
 
             @Override
-            protected void reset() {}
+            public void reset() {}
         };
     }
 
@@ -68,7 +68,7 @@ public interface CreateTool {
             }
 
             @Override
-            protected void reset() {}
+            public void reset() {}
         };
     }
 
@@ -106,7 +106,7 @@ public interface CreateTool {
             }
 
             @Override
-            protected void reset() {}
+            public void reset() {}
         };
     }
 }

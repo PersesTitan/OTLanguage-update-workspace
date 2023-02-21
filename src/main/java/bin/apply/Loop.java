@@ -10,14 +10,14 @@ import java.util.Stack;
 public class Loop {
     public static int next(Map<Integer, String> code, int position) {
         Stack<Integer> stack = new Stack<>();
-        int size = code.size();
+        int size = code.size() + 1;
         for (int i = position + 1; i<size; i++) {
             String line = code.get(i);
             if (line.isEmpty()) continue;
-            if (line.startsWith(Token.LOOP_S)) {
+            if (line.startsWith(Token.LOOP_E)) {
                 if (stack.isEmpty()) return i;
                 else stack.pop();
-            } else if (line.endsWith(Token.LOOP_E)) stack.add(i);
+            } else if (line.endsWith(Token.LOOP_S)) stack.add(i);
         }
         throw MatchException.ZONE_MATCH_ERROR.getThrow(code.get(position));
     }
@@ -51,9 +51,9 @@ public class Loop {
     }
 
     public static LoopItem getLoopType(String value) {
-        if (value.equals(Token.LOOP_S)) return LoopItem.NONE;   // }
-        else if (isPut(value)) return LoopItem.PUT;                               // } <= ㅇㅁㅇ 변수명
-        else if (isReturn(value)) return LoopItem.RETURN;                         // } => 변수명
+        if (value.equals(Token.LOOP_E)) return LoopItem.NONE;   // }
+        else if (isPut(value)) return LoopItem.PUT;             // } <= ㅇㅁㅇ 변수명
+        else if (isReturn(value)) return LoopItem.RETURN;       // } => 변수명
         else return LoopItem.NOT;
     }
 }

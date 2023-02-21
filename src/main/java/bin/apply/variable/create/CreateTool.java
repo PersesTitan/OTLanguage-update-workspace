@@ -18,7 +18,7 @@ public interface CreateTool {
             protected Object createItem(Object... params) {
                 if (params[0] instanceof CustomSet<?> set) {
                     if (set.getTypes().equals(types)) return set;
-                    else throw VariableException.TYPE_ERROR.getThrow(params[0].toString());
+                    else throw VariableException.VALUE_ERROR.getThrow(params[0].toString());
                 } else {
                     String value = params[0].toString();
                     if (value.startsWith(Token.SET_S) && value.endsWith(Token.SET_E)) {
@@ -48,7 +48,7 @@ public interface CreateTool {
             protected Object createItem(Object... params) {
                 if (params[0] instanceof CustomList<?> list) {
                     if (list.getTypes().equals(types)) return list;
-                    else throw VariableException.TYPE_ERROR.getThrow(params[0].toString());
+                    else throw VariableException.VALUE_ERROR.getThrow(params[0].toString());
                 } else {
                     String value = params[0].toString();
                     if (value.startsWith(Token.LIST_S) && value.endsWith(Token.LIST_E)) {
@@ -78,7 +78,7 @@ public interface CreateTool {
             protected Object createItem(Object... params) {
                 if (params[0] instanceof CustomMap<?,?> map) {
                     if (map.getKeyKlass().equals(keyType) && map.getValueKlass().equals(valueType)) return map;
-                    else throw VariableException.TYPE_ERROR.getThrow(params[0].toString());
+                    else throw VariableException.VALUE_ERROR.getThrow(params[0].toString());
                 } else {
                     String value = params[0].toString();
                     if (value.startsWith(Token.MAP_S) && value.endsWith(Token.MAP_E)) {

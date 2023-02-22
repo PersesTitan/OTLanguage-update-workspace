@@ -14,7 +14,7 @@ public class CreateBoolean extends CreateWork<Boolean> {
     protected Object createItem(Object... params) {
         String value = params[0].toString();
         if (value.equals(Token.TRUE) || value.equals(Token.FALSE)) return value.equals(Token.TRUE);
-        else throw VariableException.TYPE_ERROR.getThrow(value);
+        else throw VariableException.VALUE_ERROR.getThrow(value);
     }
 
     @Override

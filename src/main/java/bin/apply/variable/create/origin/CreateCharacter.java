@@ -19,7 +19,7 @@ public class CreateCharacter extends CreateWork<Character> {
                 try {
                     return (char) Integer.parseInt(value);
                 } catch (NumberFormatException e) {
-                    throw VariableException.TYPE_ERROR.getThrow(value);
+                    throw VariableException.VALUE_ERROR.getThrow(value);
                 }
             }
         }
